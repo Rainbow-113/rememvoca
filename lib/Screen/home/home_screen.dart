@@ -19,7 +19,6 @@ class home_screem extends StatelessWidget{
             streakCard(),
            SizedBox(height: 12),
               tutorial()
-
          ],
        ),
      )
