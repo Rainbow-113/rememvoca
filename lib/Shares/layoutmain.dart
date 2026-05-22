@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rememvoca/Screen/folder/folder_screen.dart';
@@ -7,19 +6,23 @@ import 'package:rememvoca/Screen/playlist/playlist_screen.dart';
 import 'package:rememvoca/Screen/setting/setting_screen.dart';
 import 'package:rememvoca/Shares/Drawer.dart';
 
-
-class layOutMain extends StatefulWidget{
+class layOutMain extends StatefulWidget {
   const layOutMain({super.key});
   @override
   State<layOutMain> createState() => _layOutMainState();
 }
+
 class _layOutMainState extends State<layOutMain> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    const home_screem(),
+  List<Widget> get _pages => [
+    home_screem(
+      onTabChange: (index) {
+        setState(() => _selectedIndex = index);
+      },
+    ),
     const folder_screen(),
     const playlist_screem(),
-    const setting_screen()
+    const setting_screen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,87 +33,103 @@ class _layOutMainState extends State<layOutMain> {
         shadowColor: Colors.black,
         automaticallyImplyLeading: false,
         //menu
-        title:Builder(
-            builder:(context)=>
-            Row(
-              children: [
-                GestureDetector(
-                    onTap:()=> Scaffold.of(context).openDrawer(),
-                    child:Container(
-                      width:44,
-                      height:44,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: const Icon(Icons.menu, color: Colors.black87, size: 22),
-                    )
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Container(
+        title: Builder(
+          builder: (context) => Row(
+            children: [
+              GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Container(
+                  width: 44,
                   height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(22),
-                      border: Border.all(color: Colors.green.shade300),
-                    ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: const Icon(
+                    Icons.menu,
+                    color: Colors.black87,
+                    size: 22,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(22),
+                    border: Border.all(color: Colors.green.shade300),
+                  ),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "Tìm kiếm",
-                      hintStyle: TextStyle(fontSize: 14, color: Colors.grey.shade400),
-                      prefixIcon: Icon(Icons.search, color: Colors.grey.shade400, size: 20),
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade400,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey.shade400,
+                        size: 20,
+                      ),
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       isDense: true,
                     ),
-                      ),
                   ),
                 ),
-                const SizedBox(width: 12),
-               Stack(
-                 clipBehavior: Clip.none,
-                 children: [
-                   Container(
-                     width: 44,
-                     height: 44,
-                     decoration: BoxDecoration(
-                       color: Colors.white,
-                       borderRadius: BorderRadius.circular(10),
-                       border: Border.all(color: Colors.grey.shade300),
-                     ),
-                     child: const Icon(
-                       Icons.notifications_on_outlined,
-                       color: Colors.black87,
-                       size: 22,
-                     ),
-                   ),
-                   //dấu đỏ thông báo
-                   Positioned(
-                       child:Container(
-                         padding: const EdgeInsets.all(4),
-                         decoration: const BoxDecoration(
-                           color: Colors.red,
-                           shape: BoxShape.circle,
-                         ),
-                         constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
-                         child:const Text(
-                           '4',
-                           style: TextStyle(
-                             color: Colors.white,
-                             fontSize: 10,
-                             fontWeight: FontWeight.bold,
-                             height: 1,
-                           ),
-                           textAlign: TextAlign.center,
-                         ),
-                       ),
-                   )
-                 ],
-               )
-              ],
-            ),
+              ),
+              const SizedBox(width: 12),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: const Icon(
+                      Icons.notifications_on_outlined,
+                      color: Colors.black87,
+                      size: 22,
+                    ),
+                  ),
+                  //dấu đỏ thông báo
+                  Positioned(
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
+                      child: const Text(
+                        '4',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       drawer: const DrawerMenu(),
@@ -137,7 +156,6 @@ class _layOutMainState extends State<layOutMain> {
             activeIcon: Icon(Icons.headphones),
             label: "Playlist",
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
             activeIcon: Icon(Icons.settings),
@@ -146,6 +164,5 @@ class _layOutMainState extends State<layOutMain> {
         ],
       ),
     );
-
   }
 }
