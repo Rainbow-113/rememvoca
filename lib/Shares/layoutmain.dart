@@ -20,7 +20,7 @@ class _layOutMainState extends State<layOutMain> {
         setState(() => _selectedIndex = index);
       },
     ),
-    const folder_screen(),
+    const folder_screen(folderName: "day 1"),
     const playlist_screem(),
     const setting_screen(),
   ];
@@ -133,7 +133,7 @@ class _layOutMainState extends State<layOutMain> {
         ),
       ),
       drawer: const DrawerMenu(),
-      body: _pages[_selectedIndex],
+      body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
