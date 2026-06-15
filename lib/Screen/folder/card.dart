@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/folder_provider.dart';
 import 'package:rememvoca/Screen/folder/flashCart/flashCart_screen.dart';
 import 'package:rememvoca/Shares/Container.dart';
 import 'package:rememvoca/Screen/folder/list_voca/list_screen.dart';
-
+import 'package:rememvoca/Shares/editFolderDialog.dart';
 class card extends StatefulWidget {
+  final String description;
+  final String folderId;
   final String folderName;
   final int totalWords;
   final int maxWords;
   const card({
     super.key,
+    required this.description,
+    required this.folderId,
     required this.folderName,
     required this.maxWords,
     required this.totalWords,
@@ -33,50 +39,78 @@ class _cardState extends State<card> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const list(folderName: "Day 1"),
+                        builder: (context) => list(
+                          folderId: widget.folderId,
+                          folderName: widget.folderName,
+                        ),
                       ),
                     );
                   },
-                  child: Container(
-                    height: 25,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEEEDFE),
-                            borderRadius: BorderRadius.circular(8),
+                  child:Column(children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEEEDFE),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.folder_outlined,
+                              color: Colors.deepPurpleAccent,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.folder_outlined,
-                            color: Colors.deepPurpleAccent,
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.folderName,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          widget.folderName,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+
+                          SizedBox(width: 5),
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.green),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              Icons.share,
+                              color: Colors.green,
+                              size: 15,
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            Icons.share,
-                            color: Colors.green,
-                            size: 15,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 41),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.description,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                   ),
+
                 ),
                 SizedBox(height: 10),
                 Container(
@@ -145,36 +179,95 @@ class _cardState extends State<card> {
                         ),
                       ),
                       SizedBox(width: 3),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.8),
-                          borderRadius: BorderRadius.circular(15),
+                      //edit
+                      GestureDetector(
+                        onTap: () => showEditFolderDialog(
+                          context,
+                          widget.folderId,
+                          widget.folderName,
+                          widget.description,
                         ),
-                        child: Icon(Icons.edit, color: Colors.grey, size: 15),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 0.8),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Icon(Icons.edit, color: Colors.grey, size: 15),
+                        ),
                       ),
                       SizedBox(width: 3),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color(0xFFD1C4E9),
-                            width: 0.8,
+                      //xóa
+                      GestureDetector(
+                        onTap: () async {
+                          // Hiện dialog xác nhận trước khi xóa
+                          final confirm = await showDialog<bool>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text("Xóa folder"),
+                              content: Text(
+                                'Bạn có chắc muốn xóa "${widget.folderName}" không?',
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: const Text("Hủy"),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text(
+                                    "Xóa",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                          if (confirm == true) {
+                            await context.read<folderProvider>().removeFolder(
+                              widget.folderId,
+                            );
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.red.shade200,
+                              width: 0.8,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          "FlashCart",
-                          style: TextStyle(
-                            color: Color(0xFF7C3AED),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                            size: 15,
                           ),
                         ),
                       ),
+                      SizedBox(width: 3),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(
+                      //     horizontal: 10,
+                      //     vertical: 3,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //       color: const Color(0xFFD1C4E9),
+                      //       width: 0.8,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(20),
+                      //   ),
+                      //   child: Text(
+                      //     "FlashCart",
+                      //     style: TextStyle(
+                      //       color: Color(0xFF7C3AED),
+                      //       fontSize: 11,
+                      //       fontWeight: FontWeight.w500,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

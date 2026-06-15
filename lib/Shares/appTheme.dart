@@ -135,4 +135,5 @@ class AppTheme {
     borderRadius: BorderRadius.circular(22),
     border: Border.all(color: Color(0xFFE5E7EB)),
   );
+  //
 }

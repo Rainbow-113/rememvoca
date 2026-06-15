@@ -1,24 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rememvoca/Model/word_model.dart';
 import 'package:rememvoca/Screen/folder/flashCart/flashcard_card.dart';
 import 'package:rememvoca/Screen/folder/flashCart/flashcard_header.dart';
 
 class FlashcardScreen extends StatefulWidget {
   final String folderName;
-  const FlashcardScreen({super.key, required this.folderName});
+  final List<wordModel> words;
+  final int initialIndex;
+  const FlashcardScreen({super.key,  this.initialIndex=0,required this.folderName,required this.words});
 
   @override
   State<FlashcardScreen> createState() => _FlashcardScreenState();
 }
 
 class _FlashcardScreenState extends State<FlashcardScreen> {
-  int _current = 1;
-  int _total = 9;
+  late int  _current ;
   bool _isEN = true;
-  bool _isFlipped = false;
 
   @override
+  void initState() {
+    super.initState();
+    _current = widget.initialIndex;
+  }
+  @override
   Widget build(BuildContext context) {
+    final wordModel currentWord = widget.words[_current];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,21 +34,20 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
             children: [
               // Header
               FlashcardHeader(
-                current: _current,
-                total: _total,
+                current: _current + 1,
+                total:  widget.words.length,
                 folderName: widget.folderName,
                 isEN: _isEN,
               ),
               SizedBox(height: 16),
-
               // Card
               FlashcardCard(
-                word: "Colon",
+                word: currentWord.english,
+                meaning: currentWord.vietnamese,
+                exampleEnglish: currentWord.exampleEnglish,       // ← thêm
+                exampleVietnamese: currentWord.exampleVietnamese, // ← thêm
                 hint: "Chạm vào thẻ để xem nghĩa",
-                isFlipped: _isFlipped,
-                onTap: () {
-                  setState(() => _isFlipped = !_isFlipped);
-                },
+
               ),
             ],
           ),

@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/auth_provider.dart';
 
 class welcome extends StatelessWidget{
+
   const welcome({super.key});
   @override
   Widget build(BuildContext context) {
-   return Container(
+    final auth = context.watch<AuthProvider>();
+
+    return Container(
      padding: EdgeInsets.all(16),
      decoration: BoxDecoration(
        color: Color(0xFF534AB7),
@@ -14,7 +19,7 @@ class welcome extends StatelessWidget{
      child: Column(
        crossAxisAlignment: CrossAxisAlignment.start,
        children: [
-         Text("Chào nguyenvanddan113! 👋", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+         Text('Chào ${auth.name ?? '-'}', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
          SizedBox(height: 4,),
          Text("Bạn chỉ cần 1 quyết định: bắt đầu học.",
              style: TextStyle(color: Colors.white70, fontSize: 13)),

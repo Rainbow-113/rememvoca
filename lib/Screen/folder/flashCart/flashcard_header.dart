@@ -51,7 +51,7 @@ class FlashcardHeader extends StatelessWidget {
                 border: Border.all(color: Color(0xFF534AB7)),
               ),
               child: Text(
-                "Folder: $folderName",
+                "Order: $current",
                 style: TextStyle(fontSize: 12, color: Color(0xFF534AB7)),
               ),
             ),
@@ -104,8 +104,36 @@ class FlashcardHeader extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8),
-
+        //Nút quay lại
+        Align(alignment: Alignment.centerLeft,
+        child:
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.black,
+                size: 14,
+              ),
+              SizedBox(width: 6),
+              Text(
+                "Quay lại",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),),
+        SizedBox(height: 8),
         // Thanh tiến trình
+
         LinearProgressIndicator(
           value: current / total,
           backgroundColor: Colors.grey.shade200,
@@ -113,7 +141,9 @@ class FlashcardHeader extends StatelessWidget {
           minHeight: 4,
           borderRadius: BorderRadius.circular(2),
         ),
+
       ],
     );
+
   }
 }

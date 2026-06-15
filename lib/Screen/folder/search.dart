@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/folder_provider.dart';
+import 'package:rememvoca/Shares/create_folder_dialog.dart';
 
 class search extends StatelessWidget {
   const search({super.key});
@@ -19,7 +22,11 @@ class search extends StatelessWidget {
                 border: Border.all(color: Colors.grey.shade300),
               ),
               child: TextField(
+                onChanged: (value) {
+                  context.read<folderProvider>().searchFolders(value);
+                },
                 decoration: InputDecoration(
+
                   hintText: "Tìm folder...",
                   hintStyle: TextStyle(
                     fontSize: 14,
@@ -45,9 +52,7 @@ class search extends StatelessWidget {
           SizedBox(width: 10),
           //Tạo
           GestureDetector(
-            onTap: () {
-              print("Đã bấm nút Tạo");
-            },
+            onTap: () => showCreateFolderDialog(context),
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),

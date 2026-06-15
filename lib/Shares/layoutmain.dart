@@ -5,6 +5,8 @@ import 'package:rememvoca/Screen/home/home_screen.dart';
 import 'package:rememvoca/Screen/playlist/playlist_screen.dart';
 import 'package:rememvoca/Screen/setting/setting_screen.dart';
 import 'package:rememvoca/Shares/Drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/auth_provider.dart';
 
 class layOutMain extends StatefulWidget {
   const layOutMain({super.key});
@@ -36,6 +38,7 @@ class _layOutMainState extends State<layOutMain> {
         title: Builder(
           builder: (context) => Row(
             children: [
+
               GestureDetector(
                 onTap: () => Scaffold.of(context).openDrawer(),
                 child: Container(
@@ -128,6 +131,28 @@ class _layOutMainState extends State<layOutMain> {
                   ),
                 ],
               ),
+              const SizedBox(width: 12),
+
+
+              GestureDetector(
+                onTap: () {
+                  context.read<AuthProvider>().logout();
+                },
+                child: Container(
+                  width: 22,
+                  height: 22,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: const Icon(
+                    Icons.logout,
+                    color: Colors.black87,
+                    size: 22,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -154,7 +179,7 @@ class _layOutMainState extends State<layOutMain> {
           BottomNavigationBarItem(
             icon: Icon(Icons.headphones_outlined),
             activeIcon: Icon(Icons.headphones),
-            label: "Playlist",
+            label: " Nghe Playlist",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),

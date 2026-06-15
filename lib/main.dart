@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/auth_provider.dart';
 import 'package:rememvoca/Provider/folder_provider.dart';
+import 'package:rememvoca/Provider/word_pro.dart';
 import 'package:rememvoca/Screen/home/home_screen.dart';
+import 'package:rememvoca/Screen/login_screen.dart';
+import 'package:rememvoca/Screen/register_screen.dart';
 import 'package:rememvoca/Shares/layoutmain.dart';
+import 'package:rememvoca/Widget/auth_wrapper.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => folderProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => folderProvider()),
+        ChangeNotifierProvider(create: (_) => wordProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -15,7 +24,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,8 +32,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const layOutMain(),
+      home: const AuthWrapper(),
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const layOutMain(),
+      },
     );
   }
 }

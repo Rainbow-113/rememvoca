@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class streakCard extends StatelessWidget {
   final List<String> days = ["T2","T3","T4","T5","T6","T7","CN"];
-  final int doneCount = 3; // đã học 3 ngày
-  final int todayIndex = 3; // hôm nay là T5
+  final int doneCount = 3;
+  final int todayIndex = 3;
 
   @override
   Widget build(BuildContext context) {

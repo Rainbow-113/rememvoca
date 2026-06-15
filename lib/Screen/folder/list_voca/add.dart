@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:rememvoca/Shares/create_word_dialog.dart';
 
 class AddCardButtons extends StatelessWidget {
-  const AddCardButtons({super.key});
+  final String folderId;
+  const AddCardButtons({super.key , required this.folderId});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class AddCardButtons extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            print("Bấm thêm thẻ mới");
+            showCreateWordDialog(context,folderId);
           },
           child: DottedBorder(
             color: const Color(0xFFC7D2FE),

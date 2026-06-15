@@ -17,31 +17,13 @@ class folder_screen extends StatefulWidget {
 }
 
 class _folder_screenState extends State<folder_screen> {
-  List<folderModel> _folders = [];
-  bool _isLoading = true;
-  String _error = '';
+  //gọi provider
   void initState() {
     super.initState();
     Future.microtask(() {
       context.read<folderProvider>().loadFolders();
     });
-    // _loadFolders();
   }
-
-  // Future<void> _loadFolders() async {
-  //   try {
-  //     final folders = await folderService.getFolders();
-  //     setState(() {
-  //       _folders = folders;
-  //       _isLoading = false;
-  //     });
-  //   } catch (e) {
-  //     setState(() {
-  //       _error = e.toString();
-  //       _isLoading = false;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +43,8 @@ class _folder_screenState extends State<folder_screen> {
                     child: CircularProgressIndicator(color: Color(0xFF534AB7)),
                   );
                 }
-                if (provider.error.isNotEmpty) {
+                if (provider.error != null && provider.error!.isNotEmpty) {
+
                   return Center(
                     child: Text(
                       'Lỗi: ${provider.error}',
@@ -76,6 +59,8 @@ class _folder_screenState extends State<folder_screen> {
                   itemBuilder: (context, index) {
                     final folder = provider.folders[index];
                     return card(
+                      description: folder.description ?? "",
+                      folderId: folder.id ?? "",
                       folderName: folder.title,
                       maxWords: folder.maxWords,
                       totalWords: folder.totalWords,
