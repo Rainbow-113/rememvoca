@@ -96,6 +96,8 @@ class folderService {
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.map((e) => folderModel.fromJson(e)).toList();
+    }else if (response.statusCode == 404) {
+      return []; // ✅ không tìm thấy → trả về rỗng
     } else {
       throw Exception('Lỗi tìm kiếm folder');
     }

@@ -12,6 +12,11 @@ class wordProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String get error => _error;
 
+  List<wordModel> _searchResults = [];
+  bool _isSearching = false;
+  List<wordModel> get searchResults => _searchResults;
+  bool get isSearching => _isSearching;
+
   Future<void> loadWords(String folderId) async {
     try {
       _isLoading = true;
@@ -57,6 +62,24 @@ class wordProvider extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
-
   }
+  //search
+  Future<void> searchWords(String keyword) async {
+    try {
+      if (keyword.isEmpty) {
+        _isSearching = false;
+        _searchResults = [];
+        notifyListeners();
+        return;
+      }
+      _isSearching = true;
+      _searchResults = await _wordService.searchWords(keyword);
+    } catch (e) {
+      _searchResults = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
 }

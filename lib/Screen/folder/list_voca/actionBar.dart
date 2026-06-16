@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rememvoca/Provider/word_pro.dart';
 
 class actionBar extends StatelessWidget {
   @override
@@ -114,6 +116,11 @@ class actionBar extends StatelessWidget {
                     border: Border.all(color: Colors.grey.shade300),
                   ),
                   child: TextField(
+                    onChanged:(value) {
+                      // Thực hiện tìm kiếm
+                      context.read<wordProvider>().searchWords(value);
+                      //
+                    },
                     decoration: InputDecoration(
                       hintText: "Tìm từ...",
                       hintStyle: TextStyle(

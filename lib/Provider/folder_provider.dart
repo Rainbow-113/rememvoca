@@ -16,7 +16,9 @@ class folderProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       _folders = await _folderService.getFolders();
+      print(" loadFolders: ${_folders.length} folders");
     } catch (e) {
+      print("loadFolders: ${_folders.length} folders"); // ← thêm
       _error = e.toString();
     } finally {
       _isLoading = false;
@@ -63,7 +65,7 @@ class folderProvider extends ChangeNotifier {
       notifyListeners();
       _folders = await _folderService.searchFolders(keyword);
     } catch (e) {
-      _error = e.toString();
+     _folders = [];
     } finally {
       _isLoading = false;
       notifyListeners();

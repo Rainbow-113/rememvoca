@@ -64,4 +64,22 @@ class wordService {
     print("update status: ${response.statusCode}");
     print("update body: ${response.body}");
   }
+  //search
+  Future<List<wordModel>> searchWords(String keyword) async {
+    final client = HttpClient()
+      ..badCertificateCallback = (cert, host, port) => true;
+    final ioClient = IOClient(client);
+    final response = await ioClient.get(Uri.parse('$baseUrl/words/search?keyword=$keyword'));
+    print("🔍 keyword: $keyword");
+    print("🔍 status: ${response.statusCode}");
+    print("🔍 body: ${response.body}"); // ← xem API trả về gì
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((e) => wordModel.fromJson(e)).toList();
+    } else if (response.statusCode == 404) {
+      return []; // ✅ không tìm thấy → trả về rỗng thay vì throw
+    } else {
+      throw Exception('Lỗi tìm kiếm từ vựng');
+    }
+  }
 }

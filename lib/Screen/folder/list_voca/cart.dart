@@ -22,14 +22,17 @@ class cart extends StatelessWidget {
             // Phần trên  tiếng Anh và tiếng Việt
             GestureDetector(
               onTap: () {
-                final allWords = context.read<wordProvider>().words;
+                final provider = context.read<wordProvider>();
+                final allWords = provider.isSearching
+                    ? provider.searchResults
+                    : provider.words;
                 final index = allWords.indexOf(word);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
                         FlashcardScreen(folderName: word.english, words: allWords,  initialIndex: index,),
-
                   ),
                 );
               },

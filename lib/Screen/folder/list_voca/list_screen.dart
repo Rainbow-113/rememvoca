@@ -58,12 +58,25 @@ class _listState extends State<list> {
                 if (provider.words.isEmpty) {
                   return Center(child: Text('Chưa có từ vựng nào!'));
                 }
+
+                final list = provider.isSearching
+                    ? provider.searchResults
+                    : provider.words;
+                if (list.isEmpty) {
+                  return Center(
+                    child: Text(
+                      provider.isSearching
+                          ? 'Không tìm thấy từ nào!'
+                          : 'Chưa có từ vựng nào!',
+                    ),
+                  );
+                }
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: provider.words.length,
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return cart(word: provider.words[index]);
+                    return cart(word: list[index]);
                   },
                 );
               },
