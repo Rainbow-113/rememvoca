@@ -15,6 +15,44 @@ Rememvoca giúp người dùng tạo, quản lý và ôn tập từ vựng thôn
 - Học từ vựng qua chế độ flashcard (lật thẻ, ôn tập)
 - Tìm kiếm từ vựng và folder
 - Đồng bộ dữ liệu với backend qua REST API
+## 📸 Hình ảnh demo
+### Đăng ký & Đăng nhập
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7e4b6e37-041b-498c-a7a2-4990edee9d46" width="250" />
+  <img src="https://github.com/user-attachments/assets/65b11b98-5c69-40b0-aa81-b47627553f9a" width="250" />
+</p>
+### Trang chủ , DrawerMenu
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/7af36051-5c27-4333-b334-6f188dcad6ae" width="250" />
+  <img src="https://github.com/user-attachments/assets/d6e36646-5c02-4425-8cf4-82ae3cd7a421" width="250" />
+</p>
+### Quản lí folder , creat folder
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/ce160921-50ef-4f55-9b6c-ed5b74fee2ef" width="250" />
+  <img src="https://github.com/user-attachments/assets/27d43597-2930-4dc7-9e51-0de7944cd328" width="250" />
+</p>
+###  Quản lí cart , creat cart, search, delete
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7eed9525-2887-451b-b838-4f3cd99f5148" width="250" />
+  <img src="https://github.com/user-attachments/assets/90ba4b5c-5820-4fa7-ae9f-17c2a69de3b9" width="250" />
+   <img width="250" alt="Screenshot_12" src="https://github.com/user-attachments/assets/db7478d0-ca54-4067-825e-50ba675f2cdd" />
+   <img width="250" alt="image" src="https://github.com/user-attachments/assets/e71b7773-35ae-4435-8bb0-5da5488c3a40" />
+
+
+</p>
+
+### Cart 
+<p align="center">
+   -Mặt Trước 
+  <img src="https://github.com/user-attachments/assets/b9f96d20-8216-4a58-8a18-569478ed1bb9" width="250" />
+    -Mặt Sau  
+  <img src="https://github.com/user-attachments/assets/b63f7cd7-f808-455e-a34c-19d69f98e681" width="250" />
+</p>
+### User detail 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3ec22577-6411-40ca-b6f0-a1735eea307a" width="250" />
+</p>
+
 
 ## Công nghệ sử dụng
 
